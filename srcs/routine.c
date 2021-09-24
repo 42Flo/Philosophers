@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/22 22:42:23 by fregulie          #+#    #+#             */
-/*   Updated: 2021/09/24 22:22:14 by fregulie         ###   ########.fr       */
+/*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
+/*   Updated: 2021/09/24 21:13:09 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+void	*routine(void *philo)
 {
-	t_data	data;
-	t_mutex	mutex;
-	t_philo	*philo;
 
-	data = init_data(ac, av);
-	mutex = init_mutex(data.nb_philo);
-	philo = init_philo(data, mutex);
-	return (0);
 }

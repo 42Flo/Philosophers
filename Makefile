@@ -6,15 +6,17 @@
 #    By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 03:39:31 by fregulie          #+#    #+#              #
-#    Updated: 2021/09/16 03:50:29 by fregulie         ###   ########.fr        #
+#    Updated: 2021/09/24 22:22:36 by fregulie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	philo
 CC				=	clang
-FLAGS			=	-Wall -Wextra -g3
+FLAGS			=	-Wall -Wextra -g3 -lpthread
 
 SRCS			=	main.c \
+					init.c \
+					threads.c \
 					tools.c
 
 PATH_I			=	./includes/
