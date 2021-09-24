@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:23 by fregulie          #+#    #+#             */
-/*   Updated: 2021/09/16 03:36:48 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/09/16 05:05:42 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_philo	*init_philo(t_data data)
 	return (philo);
 }
 
-t_data	init_data(int ac, char **av)
+t_data	init_data(char **av)
 {
 	t_data	data;
 
@@ -54,6 +54,7 @@ int	main(int ac, char **av)
 	t_data	data;
 	t_philo	*philo;
 
+	data = init_data(av);
 	philo = init_philo(data);
 	return (0);
 }
