@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/09/24 21:12:45 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/09/27 19:30:46 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_philo	*init_philo(t_data data, t_mutex mutex)
 	i = 0;
 	while (i < philo->data->nb_philo)
 	{
+		philo[i].index = i;
 		philo[i].data = &data;
 		philo[i].mutex = &mutex;
 		init_forks(philo, i);
