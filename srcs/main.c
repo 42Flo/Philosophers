@@ -20,6 +20,9 @@ int	main(int ac, char **av)
 
 	data = init_data(ac, av);
 	mutex = init_mutex(data.nb_philo);
-	philo = init_philo(data, mutex);
+	philo = init_philo(&data, &mutex);
+	start_threads(philo); //TODO error : thread failed to create / join
+	check_death(philo);
+	join_threads(philo);
 	return (0);
 }

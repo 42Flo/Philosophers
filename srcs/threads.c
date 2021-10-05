@@ -12,28 +12,31 @@
 
 #include "philo.h"
 
-int		create_threads(t_philo *philo, pthread_t *philo_t)
+int		create_threads(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
 	while (i < philo->data->nb_philo)
 	{
-		if (pthread_create(&philo_t[i], NULL, &routine, &philo[i]) != 0)
+		if (pthread_create(&philo[i].tid, NULL, routine, &philo[i]) != 0)
+		{
+			printf("create failed\n");
 			return (-1);
+		}
 		i++;
 	}
 	return (0);
 }
 
-int		join_threads(t_philo *philo, pthread_t *philo_t)
+int		join_threads(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
 	while (i < philo->data->nb_philo)
 	{
-		if (pthread_join(philo_t[i], NULL) != 0)
+		if (pthread_join(philo[i].tid, NULL) != 0)
 			return (-1);
 		i++;
 	}
@@ -42,11 +45,10 @@ int		join_threads(t_philo *philo, pthread_t *philo_t)
 
 int		start_threads(t_philo *philo)
 {
-	pthread_t	philo_t[philo->data->nb_philo];
-
-	if (!create_threads(philo, philo_t))
+	philo->data->first_time = get_timestamp();
+	if (!create_threads(philo))
 		return (-1);
-	if (!join_threads(philo, philo_t))
-		return (-1);
+	//if (!join_threads(philo))
+	//	return (-1);
 	return (0);
 }

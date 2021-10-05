@@ -15,10 +15,12 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-# include <stdbool.h>
+//# include <stdbool.h>
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+# include "colors.h"
 
 /*
 **Forks mutexes index : 
@@ -33,27 +35,37 @@
 # define THINK "is thinking"
 # define DEATH "died"
 
+enum e_program_state	{running, shutdown};
+enum e_philo_state		{eating, sleeping, thinking, dead};
+
 typedef struct	s_data
 {
-	int	nb_philo;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	max_eat;
+	int			nb_philo;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			max_eat;
+	size_t		first_time;
+	enum e_program_state	state;
 }				t_data;
 
 typedef struct	s_mutex
 {
-	pthread_mutex_t	print;
-	pthread_mutex_t	*forks;
+	pthread_mutex_t		print;
+	pthread_mutex_t		death;
+	pthread_mutex_t		*forks;
 }				t_mutex;
 
 typedef struct	s_philo
 {
-	int		index;
-	int		fork[2];
-	t_data	*data;
-	t_mutex	*mutex;
+	pthread_t	tid;
+	int			index;
+	int			fork[2];
+	int			eat_counter;
+	long		last_eat;
+	enum e_philo_state	state;
+	t_data			*data;
+	t_mutex			*mutex;
 }				t_philo;
 
 /*
@@ -62,15 +74,15 @@ typedef struct	s_philo
 
 t_data	init_data(int ac, char **av);
 t_mutex	init_mutex(int nb_philo);
-t_philo	*init_philo(t_data data, t_mutex mutex);
+t_philo	*init_philo(t_data *data, t_mutex *mutex);
 void	init_forks(t_philo *philo, int i);
 
 /*
 **(threads.c)
 */
 
-int	create_threads(t_philo *philo, pthread_t *philo_t);
-int	join_threads(t_philo *philo, pthread_t *philo_t);
+int	create_threads(t_philo *philo);
+int	join_threads(t_philo *philo);
 int	start_threads(t_philo *philo);
 
 /*
@@ -78,7 +90,9 @@ int	start_threads(t_philo *philo);
 */
 
 void	*routine(void *philo);
-int	is_dead(t_philo *philo);
+void	print_status(t_philo *philo, char *status);
+void	is_dead(t_philo *philo);
+void	check_death(t_philo *philo);
 
 /*
 **(eat.c)
@@ -92,9 +106,10 @@ int		eat(t_philo *philo);
 **(tools.c)
 */
 
+size_t	get_time_diff(size_t last_eat);
+size_t	get_timestamp(void);
 int	ft_isdigit(int c);
 int	ft_atoi(const char *str);
-
-
+int	ft_strcmp(const char *s1, const char *s2);
 
 #endif

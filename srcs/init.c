@@ -21,6 +21,7 @@ t_data	init_data(int ac, char **av)
 	data.time_to_eat = ft_atoi(av[3]);
 	data.time_to_sleep = ft_atoi(av[4]);
 	data.max_eat = -1;
+	data.state = running;
 	if (ac > 5)
 		data.max_eat = ft_atoi(av[5]);
 	return (data);
@@ -41,24 +42,27 @@ t_mutex	init_mutex(int nb_philo)
 			i++;
 		}
 	}
-	//TODO mutex for death??
+	pthread_mutex_init(&mutex.print, NULL);
+	pthread_mutex_init(&mutex.death, NULL);
 	return (mutex);
 }
 
-t_philo	*init_philo(t_data data, t_mutex mutex)
+t_philo	*init_philo(t_data *data, t_mutex *mutex)
 {
 	int	i;
 	t_philo	*philo;
 
-	philo = malloc(sizeof(t_philo) * data.nb_philo);
+	philo = malloc(sizeof(t_philo) * data->nb_philo);
 	if (!philo)
 		return (NULL); //TODO clean error return
 	i = 0;
-	while (i < philo->data->nb_philo)
+	while (i < data->nb_philo)
 	{
 		philo[i].index = i;
-		philo[i].data = &data;
-		philo[i].mutex = &mutex;
+		philo[i].data = data;
+		philo[i].mutex = mutex;
+		philo[i].eat_counter = 0;
+		philo[i].last_eat = -1;
 		init_forks(philo, i);
 		i++;
 	}

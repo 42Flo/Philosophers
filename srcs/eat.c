@@ -15,9 +15,9 @@
 void	lock_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->mutex->forks[philo->fork[LEFT]]);
-	//TODO print status
+	print_status(philo, FORK);
 	pthread_mutex_lock(&philo->mutex->forks[philo->fork[RIGHT]]);
-	//TODO print status
+	print_status(philo, FORK);
 }
 
 void	unlock_forks(t_philo *philo)
@@ -29,9 +29,13 @@ void	unlock_forks(t_philo *philo)
 int		eat(t_philo *philo)
 {
 	lock_forks(philo);
-	//TODO check death
-	//TODO print status
+	//pthread_mutex_lock(&philo->mutex->death);
+	philo->state = eating; //
+	print_status(philo, EAT);
+	philo->last_eat = get_timestamp();
 	usleep(philo->data->time_to_eat * 1000);
+	philo->eat_counter++;
+	//pthread_mutex_unlock(&philo->mutex->death);
 	unlock_forks(philo);
 	return (0);
 }

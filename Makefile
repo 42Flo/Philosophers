@@ -6,17 +6,19 @@
 #    By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 03:39:31 by fregulie          #+#    #+#              #
-#    Updated: 2021/09/24 22:22:36 by fregulie         ###   ########.fr        #
+#    Updated: 2021/09/29 18:51:17 by fregulie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	philo
 CC				=	clang
-FLAGS			=	-Wall -Wextra -g3 -lpthread
+FLAGS			=	-Wall -Wextra
 
 SRCS			=	main.c \
 					init.c \
 					threads.c \
+					routine.c \
+					eat.c \
 					tools.c
 
 PATH_I			=	./includes/
@@ -32,7 +34,7 @@ $(PATH_OBJS)	:
 					@mkdir -p $(PATH_OBJS)
 
 $(NAME)			:	$(PREFIX_OBJS)
-					@$(CC) -o $@ $(PREFIX_OBJS) $(FLAGS)
+					@$(CC) -o $@ $(PREFIX_OBJS) $(FLAGS) -lpthread
 
 $(PATH_OBJS)%.o	:	$(PATH_SRCS)%.c $(PATH_I)*.h
 					@echo "Compiling "$<
@@ -42,7 +44,7 @@ clean			:
 					@rm -rf $(PATH_OBJS)
 
 fclean			:	clean
-					@rm $(NAME)
+					@rm -f $(NAME)
 
 re				:	fclean all
 
