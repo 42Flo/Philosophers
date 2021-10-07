@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/09/27 23:37:13 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/07 18:56:16 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-//# include <stdbool.h>
+# include <limits.h>
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
 
 # include "colors.h"
 
-/*
-**Forks mutexes index : 
-*/
+# define ARG1 "number_of_philosophers"
+# define ARG2 "time_to_die"
+# define ARG3 "time_to_eat"
+# define ARG4 "time_to_sleep"
+# define ARG5 "max_eat"
 
 # define LEFT 0
 # define RIGHT 1
@@ -40,11 +42,11 @@ enum e_philo_state		{undef, eating, sleeping, thinking, dead};
 
 typedef struct	s_data
 {
-	int			nb_philo;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			max_eat;
+	long		nb_philo;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	long		max_eat;
 	size_t		first_time;
 	enum e_program_state	state;
 }				t_data;
@@ -83,6 +85,7 @@ void	init_forks(t_philo *philo, int i);
 
 int	create_threads(t_philo *philo);
 int	join_threads(t_philo *philo);
+int	detach_threads(t_philo *philo);
 int	start_threads(t_philo *philo);
 
 /*
@@ -109,7 +112,27 @@ int		eat(t_philo *philo);
 size_t	get_time_diff(size_t last_eat);
 size_t	get_timestamp(void);
 int	ft_isdigit(int c);
-int	ft_atoi(const char *str);
+long	ft_atol(const char *str);
 int	ft_strcmp(const char *s1, const char *s2);
+size_t	ft_strlen(const char *str);
+char	*ft_strdup(const char *s1);
+void	free_2d(void **arr, int size);
+
+/*
+**(end_free.c)
+*/
+
+int	destroy_mutexes(t_philo *philo);
+void	free_philo(t_philo *philo);
+
+/*
+**(errors.c)
+*/
+
+void	int_min_max_error(char *err_target, long val);
+char	**init_arg_errors_array(void);
+void	check_arg_errors(int ac, char **av);
+void	check_value_errors(t_data data);
+void	exit_error(char *err_target, char *err);
 
 #endif

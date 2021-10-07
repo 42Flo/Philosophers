@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   end_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/22 22:42:23 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/07 19:31:47 by fregulie         ###   ########.fr       */
+/*   Created: 2021/10/07 18:35:19 by fregulie          #+#    #+#             */
+/*   Updated: 2021/10/07 18:56:00 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+int	destroy_mutexes(t_philo *philo)
 {
-	t_data	data;
-	t_mutex	mutex;
-	t_philo	*philo;
+	int	i;
 
-	check_arg_errors(ac, av);
-	data = init_data(ac, av);
-	mutex = init_mutex(data.nb_philo);
-	philo = init_philo(&data, &mutex);
-	start_threads(philo);
-	check_death(philo);
-	//join_threads(philo);
-	//detach_threads(philo);
-	destroy_mutexes(philo);
-	free_philo(philo);
+	i = 0;
+	while (i < philo->data->nb_philo)
+	{
+		if (pthread_mutex_destroy(&philo->mutex->forks[i]) != 0)
+			return (-1);
+		i++;
+	}
+	if (pthread_mutex_destroy(&philo->mutex->print) != 0)
+		return (-1);
 	return (0);
+}
+
+void	free_philo(t_philo *philo)
+{
+	free(philo->mutex->forks);
+	free(philo);
 }

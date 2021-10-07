@@ -6,7 +6,7 @@
 #    By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 03:39:31 by fregulie          #+#    #+#              #
-#    Updated: 2021/09/29 18:51:17 by fregulie         ###   ########.fr        #
+#    Updated: 2021/10/07 19:29:20 by fregulie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ SRCS			=	main.c \
 					threads.c \
 					routine.c \
 					eat.c \
-					tools.c
+					tools.c \
+					errors.c \
+					end_free.c
 
 PATH_I			=	./includes/
 PATH_SRCS		=	./srcs/

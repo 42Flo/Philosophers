@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
-/*   Updated: 2021/09/28 15:52:44 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/07 18:11:11 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	check_death(t_philo *philo)
 			//pthread_mutex_lock(&philo->mutex->death);
 			if (get_time_diff(philo[i].last_eat) > (size_t)philo->data->time_to_die)
 			{
-				printf("last eat - first time |%zu|, time diff |%zu|, time_to_die |%d|\n", philo[i].last_eat - philo->data->first_time, get_time_diff(philo[i].last_eat), philo->data->time_to_die);
+				printf("last eat - first time |%zu|, time diff |%zu|, time_to_die |%ld|\n", philo[i].last_eat - philo->data->first_time, get_time_diff(philo[i].last_eat), philo->data->time_to_die);
 				is_dead(&philo[i]);
 			}
 			//pthread_mutex_unlock(&philo->mutex->death);

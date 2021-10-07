@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/09/27 19:30:46 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/07 18:56:55 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ t_data	init_data(int ac, char **av)
 {
 	t_data	data;
 
-	data.nb_philo = ft_atoi(av[1]);
-	data.time_to_die = ft_atoi(av[2]);
-	data.time_to_eat = ft_atoi(av[3]);
-	data.time_to_sleep = ft_atoi(av[4]);
+	data.nb_philo = ft_atol(av[1]);
+	data.time_to_die = ft_atol(av[2]);
+	data.time_to_eat = ft_atol(av[3]);
+	data.time_to_sleep = ft_atol(av[4]);
 	data.max_eat = -1;
 	data.state = running;
 	if (ac > 5)
-		data.max_eat = ft_atoi(av[5]);
+		data.max_eat = ft_atol(av[5]);
+	check_value_errors(data);
 	return (data);
 }
 
@@ -43,7 +44,7 @@ t_mutex	init_mutex(int nb_philo)
 		}
 	}
 	pthread_mutex_init(&mutex.print, NULL);
-	pthread_mutex_init(&mutex.death, NULL);
+	//pthread_mutex_init(&mutex.death, NULL);
 	return (mutex);
 }
 
