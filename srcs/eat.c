@@ -28,14 +28,14 @@ void	unlock_forks(t_philo *philo)
 
 int		eat(t_philo *philo)
 {
+	if (philo->data->state == shutdown || philo->state == dead)
+		return (-1);
 	lock_forks(philo);
-	//pthread_mutex_lock(&philo->mutex->death);
-	philo->state = eating; //
+	philo->state = eating;
 	print_status(philo, EAT);
 	philo->last_eat = get_timestamp();
 	usleep(philo->data->time_to_eat * 1000);
 	philo->eat_counter++;
-	//pthread_mutex_unlock(&philo->mutex->death);
 	unlock_forks(philo);
 	return (0);
 }

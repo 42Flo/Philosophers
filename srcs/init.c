@@ -63,6 +63,7 @@ t_philo	*init_philo(t_data *data, t_mutex *mutex)
 		philo[i].mutex = mutex;
 		philo[i].eat_counter = 0;
 		philo[i].last_eat = -1;
+		philo[i].state = undef;
 		init_forks(philo, i);
 		i++;
 	}

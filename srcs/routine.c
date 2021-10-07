@@ -19,17 +19,16 @@ void	*routine(void *philo_p)
 	philo = (t_philo *)philo_p;
 	philo->last_eat = get_timestamp();
 	//if (philo->index % 2 != 0)
-	//	usleep(philo->data->time_to_eat * 1000);
+	//	usleep(philo->data->time_to_eat);
 	while (philo->data->state == running && philo->state != dead)	
-	//	(philo->data->max_eat == -1 || philo->eat_counter < philo->data->max_eat))
 	{
-		eat(philo);
-		philo->state = sleeping; //
+		if (philo->index % 2 == 0 || philo->state != undef)
+			if (eat(philo) != 0)
+				break ;
+		philo->state = sleeping;
 		print_status(philo, SLEEP);
-		if (philo->data->state == shutdown || philo->state == dead)
-			break ;
 		usleep(philo->data->time_to_sleep * 1000);
-		philo->state = thinking; //
+		philo->state = thinking;
 		print_status(philo, THINK);
 	}
 	return (NULL);
@@ -41,14 +40,23 @@ void	print_status(t_philo *philo, char *status)
 	if (philo->data->state == running || (philo->state == dead
 				&& !ft_strcmp(status, DEATH)))
 	{
+		printf("%s%zu%s\t", UWHT, get_timestamp() - philo->data->first_time, RESET);	
 		if (philo->state == dead)
 			printf("%s", BRED);
 		else if (philo->index % 2 != 0)
-			printf("%s", BLU);
+			printf("%s", HBLU);
 		else
+			printf("%s", HRED);
+		printf("%d\t", philo->index + 1);
+		if (!ft_strcmp(status, FORK))
 			printf("%s", YEL);
-		printf("%zu\t", get_timestamp() - philo->data->first_time);
-		printf("%d\t%s\n", philo->index + 1, status);
+		else if (philo->state == eating)
+			printf("%s", GRN);
+		else if (philo->state == sleeping)
+			printf("%s", MAG);
+		else if (philo->state == thinking)
+			printf("%s", CYN);
+		printf("%s\n", status);
 		printf("%s", RESET);
 	}
 	pthread_mutex_unlock(&philo->mutex->print);
@@ -61,26 +69,19 @@ void	is_dead(t_philo *philo)
 	print_status(philo, DEATH);
 }
 
-/*int		check_death(t_philo *philo)
-{
-	
-}*/
-
-void	check_death(t_philo *philo_t)
+void	check_death(t_philo *philo)
 {
 	int	i;
-	t_philo	*philo;
 
-	philo = (t_philo *)philo_t;
 	while (philo->data->state == running)
 	{
 		i = 0;
-		while (philo[i].last_eat != -1 && philo->data->state == running && i < philo->data->nb_philo)
+		while (i < philo->data->nb_philo && philo[i].last_eat != -1 && philo->data->state == running)
 		{
 			//pthread_mutex_lock(&philo->mutex->death);
 			if (get_time_diff(philo[i].last_eat) > (size_t)philo->data->time_to_die)
 			{
-		//		printf("last eat - first time |%zu|, time diff |%zu|, time_to_die |%d|\n", philo[i].last_eat - philo->data->first_time, get_time_diff(philo[i].last_eat), philo->data->time_to_die);
+				printf("last eat - first time |%zu|, time diff |%zu|, time_to_die |%d|\n", philo[i].last_eat - philo->data->first_time, get_time_diff(philo[i].last_eat), philo->data->time_to_die);
 				is_dead(&philo[i]);
 			}
 			//pthread_mutex_unlock(&philo->mutex->death);

@@ -36,7 +36,7 @@
 # define DEATH "died"
 
 enum e_program_state	{running, shutdown};
-enum e_philo_state		{eating, sleeping, thinking, dead};
+enum e_philo_state		{undef, eating, sleeping, thinking, dead};
 
 typedef struct	s_data
 {
