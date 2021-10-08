@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 18:52:59 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/08 18:59:25 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,34 @@
 enum e_program_state	{running, shutdown};
 enum e_philo_state		{undef, eating, sleeping, thinking, dead};
 
-typedef struct	s_data
+typedef struct s_data
 {
-	long		nb_philo;
-	long		time_to_die;
-	long		time_to_eat;
-	long		time_to_sleep;
-	long		max_eat;
-	size_t		first_time;
+	long					nb_philo;
+	long					time_to_die;
+	long					time_to_eat;
+	long					time_to_sleep;
+	long					max_eat;
+	size_t					first_time;
 	enum e_program_state	state;
-}				t_data;
+}							t_data;
 
-typedef struct	s_mutex
+typedef struct s_mutex
 {
 	pthread_mutex_t		print;
 	pthread_mutex_t		*forks;
-}				t_mutex;
+}						t_mutex;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
-	pthread_t	tid;
-	int			index;
-	int			fork[2];
-	int			eat_counter;
-	long		last_eat;
+	pthread_t			tid;
+	int					index;
+	int					fork[2];
+	int					eat_counter;
+	long				last_eat;
 	enum e_philo_state	state;
-	t_data			*data;
-	t_mutex			*mutex;
-}				t_philo;
+	t_data				*data;
+	t_mutex				*mutex;
+}						t_philo;
 
 /*
 **(init.c)
@@ -82,9 +82,9 @@ void	init_forks(t_philo *philo, int i);
 **(threads.c)
 */
 
-int	create_threads(t_philo *philo);
-int	join_threads(t_philo *philo);
-int	start_threads(t_philo *philo);
+int		create_threads(t_philo *philo);
+int		join_threads(t_philo *philo);
+int		start_threads(t_philo *philo);
 
 /*
 **(routine.c)
@@ -114,9 +114,9 @@ void	print_status(t_philo *philo, char *status);
 **(tools.c)
 */
 
-int	ft_isdigit(int c);
+int		ft_isdigit(int c);
 long	ft_atol(const char *str);
-int	ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s1);
 
@@ -131,7 +131,7 @@ size_t	get_timestamp(void);
 **(end_free.c)
 */
 
-int	destroy_mutexes(t_philo *philo);
+int		destroy_mutexes(t_philo *philo);
 void	free_philo(t_philo *philo);
 void	free_2d(void **arr, int size);
 
