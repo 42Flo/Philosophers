@@ -6,24 +6,22 @@
 #    By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 03:39:31 by fregulie          #+#    #+#              #
-#    Updated: 2021/10/08 20:02:37 by fregulie         ###   ########.fr        #
+#    Updated: 2021/10/08 21:50:00 by fregulie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	philo
 CC				=	clang
-FLAGS			=	-Wall -Wextra -g3 -fsanitize=leak
+FLAGS			=	-Wall -Wextra
 
 SRCS			=	main.c \
 					init.c \
-					routine.c \
-					threads.c \
-					time.c \
+					process.c \
 					eat.c \
-					end_free.c \
 					print.c \
 					tools.c \
-					errors.c \
+					time.c \
+					errors.c
 
 PATH_I			=	./includes/
 PATH_SRCS		=	./srcs/
