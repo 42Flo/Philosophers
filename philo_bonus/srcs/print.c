@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 15:02:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 20:03:42 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/15 17:10:55 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,16 @@ void	print_action_color(t_philo *philo, char *status)
 
 void	print_status(t_philo *philo, char *status)
 {
-	if (philo->data->state == running || (philo->state == dead
-			&& !ft_strcmp(status, DEATH)))
-	{
-		printf("%s%zums%s\t\t", UWHT,
+	sem_wait(philo->print);
+	printf("%s%zums%s\t\t", UWHT,
 			get_timestamp() - philo->data->first_time, RESET);
-		if (philo->state == dead)
-			printf("%s", BRED);
-		else
-			print_index_color(philo);
-		printf("%d%s\t", philo->index + 1, RESET);
-		print_action_color(philo, status);
-		printf("%s%s\n", status, RESET);
-	}
+	if (philo->state == dead)
+		printf("%s", BRED);
+	else
+		print_index_color(philo);
+	printf("%d%s\t", philo->index + 1, RESET);
+	print_action_color(philo, status);
+	printf("%s%s\n", status, RESET);
+	if (philo->state != dead)
+		sem_post(philo->print);
 }

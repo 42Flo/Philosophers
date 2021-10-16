@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 22:06:31 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/15 16:49:44 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ t_philo	init_philo(t_data *data)
 
 	philo.data = data;
 	sem_unlink("forks");
-	philo.sem = sem_open("forks", O_CREAT, 0666, data->nb_philo);
+	sem_unlink("print");
+	philo.print = sem_open("print", O_CREAT, 0666, 1);
+	philo.forks = sem_open("forks", O_CREAT, 0666, data->nb_philo);
 	philo.eat_counter = 0;
 	philo.last_eat = -1;
 	philo.state = undef;

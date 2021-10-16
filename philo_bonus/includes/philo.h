@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 21:54:21 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/15 16:49:11 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ typedef struct s_data
 typedef struct s_philo
 {
 	pid_t				pid;
-	sem_t				*sem;
+	sem_t				*forks;
+	sem_t				*print;
 	int					index;
 	int					eat_counter;
 	long				last_eat;
@@ -87,7 +88,7 @@ void	print_status(t_philo *philo, char *status);
 void	create_process(t_philo *philo);
 void	child_execution(t_philo *philo);
 void	is_dead(t_philo *philo);
-void	check_death(t_philo *philo);
+int		check_death(t_philo *philo);
 
 /*
 **(eat.c)
