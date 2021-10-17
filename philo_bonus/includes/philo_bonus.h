@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/15 16:49:11 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/17 21:34:23 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
 # include <unistd.h>
-# include <pthread.h>
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -41,7 +40,7 @@
 # define DEATH "died"
 
 enum e_program_state	{running, shutdown};
-enum e_philo_state		{undef, eating, sleeping, thinking, dead};
+enum e_philo_state		{undef, eating, sleeping, thinking, dead, done_eating};
 
 typedef struct s_data
 {
@@ -86,8 +85,14 @@ void	print_status(t_philo *philo, char *status);
 */
 
 void	create_process(t_philo *philo);
+
+/*
+**(routine.c)
+*/
+
 void	child_execution(t_philo *philo);
 void	is_dead(t_philo *philo);
+int		check_int_counter(t_philo *philo);
 int		check_death(t_philo *philo);
 
 /*
@@ -124,5 +129,11 @@ char	**init_arg_errors_array(void);
 void	check_arg_errors(int ac, char **av);
 void	check_value_errors(t_data data);
 void	exit_error(char *err_target, char *err);
+
+/*
+**(end_free.c)
+*/
+
+void	free_2d(void **arr, int size);
 
 #endif

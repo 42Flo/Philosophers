@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 21:28:01 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/17 19:57:00 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	*routine(void *philo_p)
 		if (philo->index % 2 == 0 || philo->state != undef)
 			if (eat(philo) != 0)
 				break ;
+		if (check_eat_counter(philo) != 0)
+			break ;
 		philo->state = sleeping;
 		print_status(philo, SLEEP);
 		usleep(philo->data->time_to_sleep * 1000);
@@ -39,20 +41,40 @@ void	is_dead(t_philo *philo)
 	print_status(philo, DEATH);
 }
 
+int	check_eat_counter(t_philo *philo)
+{
+	if (philo->data->max_eat != -1)
+	{
+		if (philo->eat_counter >= philo->data->max_eat)
+		{
+			philo->state = done_eating;
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	check_death(t_philo *philo)
 {
 	int	i;
+	int	all_done_eating;
 
 	while (philo->data->state == running)
 	{
 		i = 0;
+		all_done_eating = 1;
 		while (i < philo->data->nb_philo && philo[i].last_eat != -1
 			&& philo->data->state == running)
 		{
-			if (get_time_diff(philo[i].last_eat)
+			if (philo[i].state != done_eating)
+				all_done_eating = 0;
+			if (philo[i].state != done_eating
+				&& get_time_diff(philo[i].last_eat)
 				> (size_t)philo->data->time_to_die)
 				is_dead(&philo[i]);
 			i++;
 		}
+		if (all_done_eating != 0)
+			philo->data->state = shutdown;
 	}
 }

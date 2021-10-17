@@ -6,11 +6,11 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 16:17:56 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 20:04:31 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/17 21:34:09 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 void	int_min_max_error(char *err_target, long val)
 {
@@ -52,7 +52,7 @@ void	check_arg_errors(int ac, char **av)
 		}
 		i++;
 	}
-	//free_2d((void **)args, 5);
+	free_2d((void **)args, 5);
 }
 
 void	check_value_errors(t_data data)

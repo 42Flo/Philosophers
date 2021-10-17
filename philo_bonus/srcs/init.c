@@ -6,11 +6,11 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/15 16:49:44 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/17 21:13:13 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 t_data	init_data(int ac, char **av)
 {

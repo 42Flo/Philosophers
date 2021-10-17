@@ -6,11 +6,11 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 03:20:27 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 18:49:17 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/17 20:19:20 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	ft_isdigit(int c)
 {

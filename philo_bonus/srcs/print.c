@@ -6,11 +6,11 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 15:02:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/15 17:10:55 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/17 21:35:40 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 void	print_index_color(t_philo *philo)
 {
@@ -38,7 +38,7 @@ void	print_status(t_philo *philo, char *status)
 {
 	sem_wait(philo->print);
 	printf("%s%zums%s\t\t", UWHT,
-			get_timestamp() - philo->data->first_time, RESET);
+		get_timestamp() - philo->data->first_time, RESET);
 	if (philo->state == dead)
 		printf("%s", BRED);
 	else

@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 16:17:56 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 18:41:44 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/17 18:54:21 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	**init_arg_errors_array(void)
 	char	**args;
 
 	args = malloc(sizeof(char *) * 5);
+	if (!args)
+		return (NULL);
 	args[0] = ft_strdup(ARG1);
 	args[1] = ft_strdup(ARG2);
 	args[2] = ft_strdup(ARG3);

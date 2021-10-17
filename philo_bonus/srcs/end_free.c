@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.c                                          :+:      :+:    :+:   */
+/*   end_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/08 19:33:50 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/17 20:10:37 by fregulie         ###   ########.fr       */
+/*   Created: 2021/10/17 21:29:58 by fregulie          #+#    #+#             */
+/*   Updated: 2021/10/17 21:34:15 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	create_process(t_philo *philo)
+void	free_2d(void **arr, int size)
 {
 	int	i;
 
 	i = 0;
-	while (i < philo->data->nb_philo)
-	{
-		philo->pid = fork();
-		if (philo->pid == 0)
-		{
-			philo->index = i;
-			break ;
-		}
-		i++;
-	}
+	while (i < size)
+		free(arr[i++]);
+	free(arr);
 }

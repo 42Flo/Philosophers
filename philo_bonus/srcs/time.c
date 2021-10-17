@@ -6,11 +6,11 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 18:46:53 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 18:47:43 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/17 20:01:03 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 size_t	get_time_diff(size_t last_eat)
 {

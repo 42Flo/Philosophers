@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 18:59:25 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/17 19:39:47 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define DEATH "died"
 
 enum e_program_state	{running, shutdown};
-enum e_philo_state		{undef, eating, sleeping, thinking, dead};
+enum e_philo_state		{undef, eating, sleeping, thinking, dead, done_eating};
 
 typedef struct s_data
 {
@@ -93,6 +93,7 @@ int		start_threads(t_philo *philo);
 void	*routine(void *philo);
 void	is_dead(t_philo *philo);
 void	check_death(t_philo *philo);
+int		check_eat_counter(t_philo *philo);
 
 /*
 **(eat.c)
