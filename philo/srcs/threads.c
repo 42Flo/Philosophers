@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:16:59 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 18:52:18 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 13:56:27 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ int	join_threads(t_philo *philo)
 	int	i;
 
 	i = 0;
-	while (i < philo->data->nb_philo)
+	if (philo->data->nb_philo > 1)
 	{
-		if (pthread_join(philo[i].tid, NULL) != 0)
-			return (-1);
-		i++;
+		while (i < philo->data->nb_philo)
+		{
+			if (pthread_join(philo[i].tid, NULL) != 0)
+				return (-1);
+			i++;
+		}
 	}
 	return (0);
 }

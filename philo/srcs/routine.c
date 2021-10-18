@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/17 19:57:00 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 13:40:28 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ void	check_death(t_philo *philo)
 	int	i;
 	int	all_done_eating;
 
+	usleep(philo->data->time_to_die * 1000);
 	while (philo->data->state == running)
 	{
 		i = 0;
 		all_done_eating = 1;
-		while (i < philo->data->nb_philo && philo[i].last_eat != -1
-			&& philo->data->state == running)
+		while (i < philo->data->nb_philo && philo->data->state == running)
 		{
 			if (philo[i].state != done_eating)
 				all_done_eating = 0;
@@ -74,7 +74,7 @@ void	check_death(t_philo *philo)
 				is_dead(&philo[i]);
 			i++;
 		}
-		if (all_done_eating != 0)
+		if (all_done_eating != 0 && philo[i].last_eat != -1)
 			philo->data->state = shutdown;
 	}
 }
