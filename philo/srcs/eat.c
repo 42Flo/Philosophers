@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 17:11:58 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 18:41:28 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 14:44:33 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int	eat(t_philo *philo)
 	lock_forks(philo);
 	philo->state = eating;
 	print_status(philo, EAT);
+	pthread_mutex_lock(&philo->death);
 	philo->last_eat = get_timestamp();
+	pthread_mutex_unlock(&philo->death);
 	usleep(philo->data->time_to_eat * 1000);
 	philo->eat_counter++;
 	unlock_forks(philo);

@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 21:29:58 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/17 21:34:15 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 14:57:58 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,12 @@ void	free_2d(void **arr, int size)
 	while (i < size)
 		free(arr[i++]);
 	free(arr);
+}
+
+void	destroy_sems(t_philo *philo)
+{
+	sem_unlink("forks");
+	sem_unlink("print");
+	sem_close(philo->forks);
+	sem_close(philo->print);
 }

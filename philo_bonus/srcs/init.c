@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/17 21:13:13 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 16:02:34 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_data	init_data(int ac, char **av)
 	return (data);
 }
 
-t_philo	init_philo(t_data *data)
+/*t_philo	init_philo(t_data *data)
 {
 	t_philo	philo;
 
@@ -41,4 +41,34 @@ t_philo	init_philo(t_data *data)
 	philo.last_eat = -1;
 	philo.state = undef;
 	return (philo);
+}*/
+
+t_sema	init_sem(int nb_philo)
+{
+	t_sema	sem;
+
+	sem_unlink("forks");
+	sem_unlink("print");
+	sem.forks = sem_open("forks", O_CREAT, 0666, nb_philo);
+	sem.print = sem_open("print", O_CREAT, 0666, 1);
+	return (sem);
+}
+
+void	init_philo(t_data *data, t_sema *sem)
+{
+	int		i;
+
+	g_philo = malloc(sizeof(t_philo) * data->nb_philo);
+	if (!g_philo)
+		return ;
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		g_philo[i].index = i;
+		g_philo[i].data = data;
+		g_philo[i].sem = sem;
+		g_philo[i].eat_counter = 0;
+		g_philo[i].last_eat = -1;
+		g_philo[i].state = undef;
+	}
 }

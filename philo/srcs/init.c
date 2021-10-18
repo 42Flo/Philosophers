@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 18:53:09 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 14:39:03 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_philo	*init_philo(t_data *data, t_mutex *mutex)
 		philo[i].eat_counter = 0;
 		philo[i].last_eat = -1;
 		philo[i].state = undef;
+		pthread_mutex_init(&philo[i].death, NULL);
 		init_forks(philo, i);
 		i++;
 	}

@@ -6,13 +6,13 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:23 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/17 20:00:33 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 23:30:01 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int	main(int ac, char **av)
+/*int	main(int ac, char **av)
 {
 	t_data	data;
 	t_philo	philo;
@@ -28,10 +28,24 @@ int	main(int ac, char **av)
 	else
 	{
 		waitpid(-1, &status, 0);
-		sem_unlink("forks");
-		sem_unlink("print");
-		sem_close(philo.forks);
-		sem_close(philo.print);
+		destroy_sems(&philo);
 	}
 	return (0);
+}*/
+
+int	main(int ac, char **av)
+{
+	t_data	data;
+	t_sema	sem;
+	t_philo	*philo;
+
+	check_arg_errors(ac, av);
+	data = init_data(ac, av);
+	sem = init_sem(data.nb_philo);
+	init_philo(&data, &sem);
+	//TODO first timestamp?
+	philo = create_process();
+	if (philo->pid == 0)
+		child_execution(philo);
+	//TODO parent execution : waitpid, check death
 }

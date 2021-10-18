@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/17 21:34:23 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 16:12:54 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,37 @@ typedef struct s_data
 	long					time_to_sleep;
 	long					max_eat;
 	size_t					first_time;
+	sem_t				*forks;
+	sem_t				*print;
 	enum e_program_state	state;
 }							t_data;
+
+typedef struct s_sema
+{
+	sem_t				*forks;
+	sem_t				*print;
+}						t_sema;
 
 typedef struct s_philo
 {
 	pid_t				pid;
-	sem_t				*forks;
-	sem_t				*print;
 	int					index;
 	int					eat_counter;
 	long				last_eat;
 	enum e_philo_state	state;
 	t_data				*data;
+	t_sema				*sem;
 }						t_philo;
+
+extern t_philo	*g_philo;
 
 /*
 **(init.c)
 */
 
 t_data	init_data(int ac, char **av);
-t_philo	init_philo(t_data *data);
+t_sema	init_sem(int nb_philo);
+void	init_philo(t_data *data, t_sema *sem);
 
 /*
 **(print.c)
@@ -84,7 +94,7 @@ void	print_status(t_philo *philo, char *status);
 **(process.c)
 */
 
-void	create_process(t_philo *philo);
+t_philo	*create_process(void);
 
 /*
 **(routine.c)
@@ -135,5 +145,6 @@ void	exit_error(char *err_target, char *err);
 */
 
 void	free_2d(void **arr, int size);
+void	destroy_sems(t_philo *philo);
 
 #endif

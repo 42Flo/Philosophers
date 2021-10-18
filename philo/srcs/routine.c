@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/18 13:40:28 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 14:41:32 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	*routine(void *philo_p)
 		philo->state = thinking;
 		print_status(philo, THINK);
 	}
+	pthread_mutex_destroy(&philo->death);
 	return (NULL);
 }
 
@@ -54,7 +55,7 @@ int	check_eat_counter(t_philo *philo)
 	return (0);
 }
 
-void	check_death(t_philo *philo)
+void	check_end(t_philo *philo)
 {
 	int	i;
 	int	all_done_eating;
@@ -68,10 +69,12 @@ void	check_death(t_philo *philo)
 		{
 			if (philo[i].state != done_eating)
 				all_done_eating = 0;
+			pthread_mutex_lock(&philo[i].death);
 			if (philo[i].state != done_eating
 				&& get_time_diff(philo[i].last_eat)
 				> (size_t)philo->data->time_to_die)
 				is_dead(&philo[i]);
+			pthread_mutex_unlock(&philo[i].death);
 			i++;
 		}
 		if (all_done_eating != 0 && philo[i].last_eat != -1)

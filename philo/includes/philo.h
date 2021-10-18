@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/17 19:39:47 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 14:38:17 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_philo
 	enum e_philo_state	state;
 	t_data				*data;
 	t_mutex				*mutex;
+	pthread_mutex_t		death;
 }						t_philo;
 
 /*
@@ -92,7 +93,7 @@ int		start_threads(t_philo *philo);
 
 void	*routine(void *philo);
 void	is_dead(t_philo *philo);
-void	check_death(t_philo *philo);
+void	check_end(t_philo *philo);
 int		check_eat_counter(t_philo *philo);
 
 /*

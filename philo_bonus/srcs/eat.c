@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 21:18:34 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/17 21:18:25 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/18 15:07:50 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	unlock_forks(t_philo *philo)
 
 int	eat(t_philo *philo)
 {
-	if (check_death(philo))
-		return (1);
+	check_death(philo);
 	lock_forks(philo);
 	philo->state = eating;
 	print_status(philo, EAT);
