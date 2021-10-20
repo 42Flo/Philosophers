@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 16:23:50 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:17:46 by csegal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,13 @@ t_sema	init_sem(int nb_philo)
 	sem.forks = sem_open("forks", O_CREAT, 0666, nb_philo);
 	sem.print = sem_open("print", O_CREAT, 0666, 1);
 	return (sem);
+}
+
+sem_t	*init_death_sem(void)
+{
+	sem_t	*death;
+
+	sem_unlink("death");
+	death = sem_open("death", O_CREAT, 0666, 1);
+	return (death);
 }
