@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 14:23:00 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/20 17:28:55 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_philo	init_philo(t_data *data, t_sema *sem);
 void	print_index_color(t_philo *philo);
 void	print_action_color(t_philo *philo, char *status);
 void	print_status(t_philo *philo, char *status);
+void	print_death(t_philo *philo);
 
 /*
 **(process.c)

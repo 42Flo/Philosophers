@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 20:09:36 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 15:16:06 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/20 17:39:10 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 void	is_dead(t_philo *philo)
 {
 	sem_post(philo->death);
+	sem_wait(philo->sem->print);
 	philo->state = dead;
-	print_status(philo, DEATH);
+	philo->data->state = shutdown;
+	//print_status(philo, DEATH);
 	sem_unlink("death");
 	sem_close(philo->death);
+	print_death(philo);
 	kill(0, SIGINT);
 }
 
@@ -37,7 +40,6 @@ void	*check_death(void *philo_p)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_p;
-	usleep(philo->data->time_to_die * 1000);
 	while (philo->data->state == running && philo->state != done_eating)
 	{
 		sem_wait(philo->death);
@@ -88,13 +90,13 @@ void	child_execution(t_philo *philo)
 	tid = create_death_thread(philo);
 	while (philo->data->state == running && philo->state != dead)
 	{
-		if (eat(philo) != 0)
-			exit(0);
+		if (philo->index % 2 == 0 || philo->state != undef)
+			if (eat(philo) != 0)
+				exit(0);
 		if (check_eat_counter(philo) != 0)
 			exit(0);
 		philo->state = sleeping;
 		print_status(philo, SLEEP);
-		//check_death(philo);
 		usleep(philo->data->time_to_sleep * 1000);
 		philo->state = thinking;
 		print_status(philo, THINK);

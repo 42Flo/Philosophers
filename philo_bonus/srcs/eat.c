@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 21:18:34 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 15:14:38 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/20 16:13:54 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	eat(t_philo *philo)
 	sem_post(philo->death);
 	print_status(philo, EAT);
 	usleep(philo->data->time_to_eat * 1000);
-	philo->eat_counter++;
 	unlock_forks(philo);
+	philo->eat_counter++;
 	return (0);
 }
