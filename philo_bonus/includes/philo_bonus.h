@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/18 16:12:54 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/20 14:23:00 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <pthread.h>
 # include <semaphore.h>
 
 # include "colors.h"
@@ -68,6 +69,7 @@ typedef struct s_philo
 	int					eat_counter;
 	long				last_eat;
 	enum e_philo_state	state;
+	sem_t				*death;
 	t_data				*data;
 	t_sema				*sem;
 }						t_philo;
@@ -80,7 +82,7 @@ extern t_philo	*g_philo;
 
 t_data	init_data(int ac, char **av);
 t_sema	init_sem(int nb_philo);
-void	init_philo(t_data *data, t_sema *sem);
+t_philo	init_philo(t_data *data, t_sema *sem);
 
 /*
 **(print.c)
@@ -94,16 +96,17 @@ void	print_status(t_philo *philo, char *status);
 **(process.c)
 */
 
-t_philo	*create_process(void);
+void	create_process(t_philo *philo);
 
 /*
 **(routine.c)
 */
 
-void	child_execution(t_philo *philo);
 void	is_dead(t_philo *philo);
 int		check_int_counter(t_philo *philo);
-int		check_death(t_philo *philo);
+void	*check_death(void *philo_p);
+void	child_execution(t_philo *philo);
+void	parent_execution(t_philo *philo);
 
 /*
 **(eat.c)

@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 15:02:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/17 21:35:40 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/20 13:53:04 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_action_color(t_philo *philo, char *status)
 
 void	print_status(t_philo *philo, char *status)
 {
-	sem_wait(philo->print);
+	sem_wait(philo->sem->print);
 	printf("%s%zums%s\t\t", UWHT,
 		get_timestamp() - philo->data->first_time, RESET);
 	if (philo->state == dead)
@@ -47,5 +47,5 @@ void	print_status(t_philo *philo, char *status)
 	print_action_color(philo, status);
 	printf("%s%s\n", status, RESET);
 	if (philo->state != dead)
-		sem_post(philo->print);
+		sem_post(philo->sem->print);
 }
