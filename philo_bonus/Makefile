@@ -6,18 +6,18 @@
 #    By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 03:39:31 by fregulie          #+#    #+#              #
-#    Updated: 2021/10/20 15:01:28 by fregulie         ###   ########.fr        #
+#    Updated: 2021/10/20 19:49:51 by fregulie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	philo_bonus
 CC				=	clang
-FLAGS			=	-Wall -Wextra -g3
+FLAGS			=	-Wall -Wextra -Werror
 
 SRCS			=	main.c \
 					init.c \
 					process.c \
-					routine.c \
+					child.c \
 					eat.c \
 					print.c \
 					tools.c \

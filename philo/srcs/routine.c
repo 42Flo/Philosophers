@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/18 14:41:32 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/20 19:44:32 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	check_end(t_philo *philo)
 				> (size_t)philo->data->time_to_die)
 				is_dead(&philo[i]);
 			pthread_mutex_unlock(&philo[i].death);
+			usleep(10);
 			i++;
 		}
 		if (all_done_eating != 0 && philo[i].last_eat != -1)

@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 20:09:36 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 18:27:38 by csegal           ###   ########.fr       */
+/*   Updated: 2021/10/20 19:52:40 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	*check_death(void *philo_p)
 		if (get_time_diff(philo->last_eat) > (size_t)philo->data->time_to_die)
 			is_dead(philo);
 		sem_post(philo->death);
+		usleep(1000);
 	}
 	return (NULL);
 }
