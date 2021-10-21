@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 15:02:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/08 18:41:15 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/21 16:15:50 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,25 @@ void	print_action_color(t_philo *philo, char *status)
 {
 	if (!ft_strcmp(status, FORK))
 		printf("%s", YEL);
-	else if (philo->state == eating)
+	else if (check_state(philo, eating))
 		printf("%s", GRN);
-	else if (philo->state == sleeping)
+	else if (check_state(philo, sleeping))
 		printf("%s", MAG);
-	else if (philo->state == thinking)
+	else if (check_state(philo, thinking))
 		printf("%s", CYN);
-	else if (philo->state == dead)
+	else if (check_state(philo, dead))
 		printf("%s", RED);
 }
 
 void	print_status(t_philo *philo, char *status)
 {
-	pthread_mutex_lock(&philo->mutex->print);
-	if (philo->data->state == running || (philo->state == dead
+	pthread_mutex_lock(&philo->mutex->m_print);
+	if (check_pstate(philo, running) || (check_state(philo, dead)
 			&& !ft_strcmp(status, DEATH)))
 	{
 		printf("%s%zums%s\t\t", UWHT,
 			get_timestamp() - philo->data->first_time, RESET);
-		if (philo->state == dead)
+		if (check_state(philo, dead))
 			printf("%s", BRED);
 		else
 			print_index_color(philo);
@@ -50,5 +50,5 @@ void	print_status(t_philo *philo, char *status)
 		print_action_color(philo, status);
 		printf("%s%s\n", status, RESET);
 	}
-	pthread_mutex_unlock(&philo->mutex->print);
+	pthread_mutex_unlock(&philo->mutex->m_print);
 }

@@ -6,18 +6,19 @@
 #    By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 03:39:31 by fregulie          #+#    #+#              #
-#    Updated: 2021/10/20 19:49:51 by fregulie         ###   ########.fr        #
+#    Updated: 2021/10/21 17:19:05 by fregulie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	philo_bonus
 CC				=	clang
-FLAGS			=	-Wall -Wextra -Werror
+FLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=thread
 
 SRCS			=	main.c \
 					init.c \
 					process.c \
 					child.c \
+					state.c \
 					eat.c \
 					print.c \
 					tools.c \

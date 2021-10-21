@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 16:17:56 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/18 13:20:50 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/21 13:03:25 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	check_arg_errors(int ac, char **av)
 
 void	check_value_errors(t_data data)
 {
-	if (data.nb_philo < 2)
-		exit_error("number_of_philosophers", "value must be >= 2");
+	if (data.nb_philo < 1)
+		exit_error("number_of_philosophers", "value must be >= 1");
 	int_min_max_error(ARG1, data.nb_philo);
 	int_min_max_error(ARG2, data.time_to_die);
 	int_min_max_error(ARG3, data.time_to_eat);

@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/18 14:38:17 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/21 16:57:54 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <limits.h>
 # include <unistd.h>
 # include <pthread.h>
@@ -53,13 +54,15 @@ typedef struct s_data
 
 typedef struct s_mutex
 {
-	pthread_mutex_t		print;
-	pthread_mutex_t		*forks;
+	pthread_mutex_t		m_print;
+	pthread_mutex_t		m_pstate;
+	pthread_mutex_t		*m_forks;
 }						t_mutex;
 
 typedef struct s_philo
 {
 	pthread_t			tid;
+	bool				started;
 	int					index;
 	int					fork[2];
 	int					eat_counter;
@@ -67,7 +70,10 @@ typedef struct s_philo
 	enum e_philo_state	state;
 	t_data				*data;
 	t_mutex				*mutex;
-	pthread_mutex_t		death;
+	pthread_mutex_t		m_eat_count;
+	pthread_mutex_t		m_death;
+	pthread_mutex_t		m_state;
+	pthread_mutex_t		m_start;
 }						t_philo;
 
 /*
@@ -88,19 +94,26 @@ int		join_threads(t_philo *philo);
 int		start_threads(t_philo *philo);
 
 /*
+**(start.c)
+*/
+
+void	init_start_val(t_philo *philo);
+bool	check_start_val(t_philo *philo);
+
+/*
 **(routine.c)
 */
 
 void	*routine(void *philo);
 void	is_dead(t_philo *philo);
 void	check_end(t_philo *philo);
-int		check_eat_counter(t_philo *philo);
+bool	check_eat_counter(t_philo *philo);
 
 /*
 **(eat.c)
 */
 
-void	lock_forks(t_philo *philo);
+bool	lock_forks(t_philo *philo);
 void	unlock_forks(t_philo *philo);
 int		eat(t_philo *philo);
 
@@ -111,6 +124,15 @@ int		eat(t_philo *philo);
 void	print_index_color(t_philo *philo);
 void	print_action_color(t_philo *philo, char *status);
 void	print_status(t_philo *philo, char *status);
+
+/*
+**(state.c)
+*/
+
+void	change_state(t_philo *philo, int state);
+bool	check_state(t_philo *philo, enum e_philo_state state);
+void	change_pstate(t_philo *philo, int pstate);
+bool	check_pstate(t_philo *philo, enum e_program_state state);
 
 /*
 **(tools.c)
@@ -133,7 +155,7 @@ size_t	get_timestamp(void);
 **(end_free.c)
 */
 
-int		destroy_mutexes(t_philo *philo);
+int		destroy_shared_mutexes(t_philo *philo);
 void	free_philo(t_philo *philo);
 void	free_2d(void **arr, int size);
 

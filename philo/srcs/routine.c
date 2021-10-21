@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 19:44:32 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/21 17:03:40 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,49 @@ void	*routine(void *philo_p)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_p;
+	pthread_mutex_lock(&philo->m_death);
 	philo->last_eat = get_timestamp();
-	while (philo->data->state == running && philo->state != dead)
+	pthread_mutex_unlock(&philo->m_death);
+	init_start_val(philo);
+	while (check_pstate(philo, running) && !check_state(philo, dead))
 	{
-		if (philo->index % 2 == 0 || philo->state != undef)
+		if (philo->index % 2 == 0 || !check_state(philo, undef))
 			if (eat(philo) != 0)
 				break ;
-		if (check_eat_counter(philo) != 0)
+		if (check_eat_counter(philo))
 			break ;
-		philo->state = sleeping;
+		change_state(philo, sleeping);
 		print_status(philo, SLEEP);
 		usleep(philo->data->time_to_sleep * 1000);
-		philo->state = thinking;
+		change_state(philo, thinking);
 		print_status(philo, THINK);
 	}
-	pthread_mutex_destroy(&philo->death);
 	return (NULL);
 }
 
 void	is_dead(t_philo *philo)
 {
-	philo->state = dead;
-	philo->data->state = shutdown;
+	change_state(philo, dead);
+	change_pstate(philo, shutdown);
 	print_status(philo, DEATH);
 }
 
-int	check_eat_counter(t_philo *philo)
+bool	check_eat_counter(t_philo *philo)
 {
+	bool	ret;
+
+	ret = false;
+	pthread_mutex_lock(&philo->m_eat_count);
 	if (philo->data->max_eat != -1)
 	{
 		if (philo->eat_counter >= philo->data->max_eat)
 		{
-			philo->state = done_eating;
-			return (1);
+			change_state(philo, done_eating);
+			ret = true;
 		}
 	}
-	return (0);
+	pthread_mutex_unlock(&philo->m_eat_count);
+	return (ret);
 }
 
 void	check_end(t_philo *philo)
@@ -60,25 +67,25 @@ void	check_end(t_philo *philo)
 	int	i;
 	int	all_done_eating;
 
-	usleep(philo->data->time_to_die * 1000);
-	while (philo->data->state == running)
+	while (check_pstate(philo, running))
 	{
 		i = 0;
-		all_done_eating = 1;
+		all_done_eating = true;
 		while (i < philo->data->nb_philo && philo->data->state == running)
 		{
-			if (philo[i].state != done_eating)
-				all_done_eating = 0;
-			pthread_mutex_lock(&philo[i].death);
-			if (philo[i].state != done_eating
+			if (!check_state(philo, done_eating))
+				all_done_eating = false;
+			pthread_mutex_lock(&philo[i].m_death);
+			if (!check_state(philo, done_eating)
+				&& check_start_val(philo)
 				&& get_time_diff(philo[i].last_eat)
 				> (size_t)philo->data->time_to_die)
 				is_dead(&philo[i]);
-			pthread_mutex_unlock(&philo[i].death);
+			pthread_mutex_unlock(&philo[i].m_death);
 			usleep(10);
 			i++;
 		}
-		if (all_done_eating != 0 && philo[i].last_eat != -1)
-			philo->data->state = shutdown;
+		if (all_done_eating && philo[i].last_eat != -1)
+			change_pstate(philo, shutdown);
 	}
 }

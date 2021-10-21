@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 18:59:07 by csegal           ###   ########.fr       */
+/*   Updated: 2021/10/21 12:58:20 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_sema
 typedef struct s_philo
 {
 	pid_t				pid;
+	pthread_t			tid;
 	int					index;
 	int					eat_counter;
 	long				last_eat;

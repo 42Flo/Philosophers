@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/18 14:39:03 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/21 15:58:43 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,17 @@ t_mutex	init_mutex(int nb_philo)
 	int		i;
 
 	i = 0;
-	mutex.forks = malloc(sizeof(pthread_mutex_t) * nb_philo);
-	if (mutex.forks)
+	mutex.m_forks = malloc(sizeof(pthread_mutex_t) * nb_philo);
+	if (mutex.m_forks)
 	{
 		while (i < nb_philo)
 		{
-			pthread_mutex_init(&mutex.forks[i], NULL);
+			pthread_mutex_init(&mutex.m_forks[i], NULL);
 			i++;
 		}
 	}
-	pthread_mutex_init(&mutex.print, NULL);
+	pthread_mutex_init(&mutex.m_print, NULL);
+	pthread_mutex_init(&mutex.m_pstate, NULL);
 	return (mutex);
 }
 
@@ -59,12 +60,16 @@ t_philo	*init_philo(t_data *data, t_mutex *mutex)
 	while (i < data->nb_philo)
 	{
 		philo[i].index = i;
+		philo[i].started = false;
 		philo[i].data = data;
 		philo[i].mutex = mutex;
 		philo[i].eat_counter = 0;
 		philo[i].last_eat = -1;
 		philo[i].state = undef;
-		pthread_mutex_init(&philo[i].death, NULL);
+		pthread_mutex_init(&(philo[i].m_eat_count), NULL);
+		pthread_mutex_init(&(philo[i].m_death), NULL);
+		pthread_mutex_init(&(philo[i].m_state), NULL);
+		pthread_mutex_init(&(philo[i].m_start), NULL);
 		init_forks(philo, i);
 		i++;
 	}

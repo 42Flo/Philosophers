@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 20:09:36 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 19:52:40 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/21 13:11:52 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	is_dead(t_philo *philo)
 	sem_wait(philo->sem->print);
 	philo->state = dead;
 	philo->data->state = shutdown;
-	sem_unlink("death");
-	sem_close(philo->death);
 	print_death(philo);
+	destroy_sems(philo);
+	pthread_join(philo->tid, NULL);
 	kill(0, SIGINT);
 }
 
@@ -33,7 +33,10 @@ void	*check_death(void *philo_p)
 	{
 		sem_wait(philo->death);
 		if (get_time_diff(philo->last_eat) > (size_t)philo->data->time_to_die)
+		{
 			is_dead(philo);
+			return (NULL);
+		}
 		sem_post(philo->death);
 		usleep(1000);
 	}
@@ -63,23 +66,22 @@ int	check_eat_counter(t_philo *philo)
 
 void	child_execution(t_philo *philo)
 {
-	pthread_t	tid;
-
 	philo->death = init_death_sem();
 	philo->last_eat = get_timestamp();
-	tid = create_death_thread(philo);
+	philo->tid = create_death_thread(philo);
 	while (philo->data->state == running && philo->state != dead)
 	{
 		if (philo->index % 2 == 0 || philo->state != undef)
 			if (eat(philo) != 0)
-				exit(0);
+				break ;
 		if (check_eat_counter(philo) != 0)
-			exit(0);
+			break ;
 		philo->state = sleeping;
 		print_status(philo, SLEEP);
 		usleep(philo->data->time_to_sleep * 1000);
 		philo->state = thinking;
 		print_status(philo, THINK);
 	}
-	pthread_detach(tid);
+	pthread_join(philo->tid, NULL);
+	destroy_sems(philo);
 }
