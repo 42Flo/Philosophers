@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 18:17:46 by csegal           ###   ########.fr       */
+/*   Updated: 2021/10/24 20:26:05 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_philo	init_philo(t_data *data, t_sema *sem)
 {
 	t_philo	philo;
 
+	philo.pid = -1;
 	philo.data = data;
 	philo.sem = sem;
 	philo.eat_counter = 0;
@@ -46,16 +47,17 @@ t_sema	init_sem(int nb_philo)
 
 	sem_unlink("forks");
 	sem_unlink("print");
-	sem.forks = sem_open("forks", O_CREAT, 0666, nb_philo);
-	sem.print = sem_open("print", O_CREAT, 0666, 1);
+	sem_unlink("pstate");
+	sem.s_forks = sem_open("forks", O_CREAT, 0666, nb_philo);
+	sem.s_print = sem_open("print", O_CREAT, 0666, 1);
+	sem.s_pstate = sem_open("pstate", O_CREAT, 0666, 1);
 	return (sem);
 }
 
-sem_t	*init_death_sem(void)
+void	init_child_sems(t_philo *philo)
 {
-	sem_t	*death;
-
 	sem_unlink("death");
-	death = sem_open("death", O_CREAT, 0666, 1);
-	return (death);
+	sem_unlink("state");
+	philo->s_death = sem_open("death", O_CREAT, 0666, 1);
+	philo->s_state = sem_open("state", O_CREAT, 0666, 1);
 }

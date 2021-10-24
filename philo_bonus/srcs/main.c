@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:23 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 18:24:22 by csegal           ###   ########.fr       */
+/*   Updated: 2021/10/24 20:41:48 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,19 @@ int	main(int ac, char **av)
 		child_execution(&philo);
 	else
 		parent_execution(&philo);
+	return (0);
 }
 
 void	parent_execution(t_philo *philo)
 {
 	int	status;
+	int	i;
 
-	waitpid(-1, &status, 0);
+	i = 0;
+	while (i < philo->data->nb_philo)
+	{
+		waitpid(philo->data->pid_arr[i], &status, 0);
+		i++;
+	}
 	destroy_sems(philo);
 }

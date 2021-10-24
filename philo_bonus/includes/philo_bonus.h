@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:49 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/21 12:58:20 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/24 20:17:56 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <unistd.h>
+# include <stdbool.h>
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -46,6 +47,7 @@ enum e_philo_state		{undef, eating, sleeping, thinking, dead, done_eating};
 
 typedef struct s_data
 {
+	pid_t					*pid_arr;
 	long					nb_philo;
 	long					time_to_die;
 	long					time_to_eat;
@@ -59,8 +61,9 @@ typedef struct s_data
 
 typedef struct s_sema
 {
-	sem_t				*forks;
-	sem_t				*print;
+	sem_t				*s_forks;
+	sem_t				*s_print;
+	sem_t				*s_pstate;
 }						t_sema;
 
 typedef struct s_philo
@@ -71,7 +74,8 @@ typedef struct s_philo
 	int					eat_counter;
 	long				last_eat;
 	enum e_philo_state	state;
-	sem_t				*death;
+	sem_t				*s_death;
+	sem_t				*s_state;
 	t_data				*data;
 	t_sema				*sem;
 }						t_philo;
@@ -90,7 +94,7 @@ void	parent_execution(t_philo *philo);
 
 t_data	init_data(int ac, char **av);
 t_sema	init_sem(int nb_philo);
-sem_t	*init_death_sem(void);
+void	init_child_sems(t_philo *philo);
 t_philo	init_philo(t_data *data, t_sema *sem);
 
 /*
@@ -124,6 +128,15 @@ void	child_execution(t_philo *philo);
 void	lock_forks(t_philo *philo);
 void	unlock_forks(t_philo *philo);
 int		eat(t_philo *philo);
+
+/*
+**(state.c)
+*/
+
+void	change_pstate(t_philo *philo, int pstate);
+bool	check_pstate(t_philo *philo, enum e_program_state pstate);
+void	change_state(t_philo *philo, int state);
+bool	check_state(t_philo *philo, enum e_philo_state state);
 
 /*
 **(tools.c)

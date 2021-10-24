@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 15:02:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/20 18:11:56 by csegal           ###   ########.fr       */
+/*   Updated: 2021/10/24 15:54:48 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	print_action_color(t_philo *philo, char *status)
 {
 	if (!ft_strcmp(status, FORK))
 		printf("%s", YEL);
-	else if (philo->state == eating)
+	else if (check_state(philo, eating))
 		printf("%s", GRN);
-	else if (philo->state == sleeping)
+	else if (check_state(philo, sleeping))
 		printf("%s", MAG);
-	else if (philo->state == thinking)
+	else if (check_state(philo, thinking))
 		printf("%s", CYN);
 }
 
@@ -42,7 +42,7 @@ void	print_death(t_philo *philo)
 
 void	print_status(t_philo *philo, char *status)
 {
-	sem_wait(philo->sem->print);
+	sem_wait(philo->sem->s_print);
 	printf("%s%zums%s\t\t", UWHT,
 		get_timestamp() - philo->data->first_time, RESET);
 	if (philo->state == dead)
@@ -52,5 +52,5 @@ void	print_status(t_philo *philo, char *status)
 	printf("%d%s\t", philo->index + 1, RESET);
 	print_action_color(philo, status);
 	printf("%s%s\n", status, RESET);
-	sem_post(philo->sem->print);
+	sem_post(philo->sem->s_print);
 }

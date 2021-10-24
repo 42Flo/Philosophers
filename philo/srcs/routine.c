@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/21 17:03:40 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/24 17:21:23 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	is_dead(t_philo *philo)
 {
 	change_state(philo, dead);
 	change_pstate(philo, shutdown);
-	print_status(philo, DEATH);
+	print_death(philo);
 }
 
 bool	check_eat_counter(t_philo *philo)
