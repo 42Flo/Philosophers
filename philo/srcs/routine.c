@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/25 13:17:08 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/25 14:33:15 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ void	*routine(void *philo_p)
 	{
 		if (philo->index % 2 == 0 || !check_state(philo, undef))
 			if (eat(philo) != 0)
-				break ;
+				return (NULL);
 		if (check_eat_counter(philo))
-			break ;
+			return (NULL);
 		change_state(philo, sleeping);
 		print_status(philo, SLEEP);
 		usleep(philo->data->time_to_sleep * 1000);
+		if (check_pstate(philo, shutdown))
+			return (NULL);
 		change_state(philo, thinking);
 		print_status(philo, THINK);
 	}
