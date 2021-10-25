@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 17:11:58 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/21 17:01:54 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/24 21:19:39 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 bool	lock_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->mutex->m_forks[philo->fork[LEFT]]));
+	pthread_mutex_lock(&(philo->mutex->m_forks[philo->fork[RIGHT]]));
 	print_status(philo, FORK);
 	if (philo->data->nb_philo < 2)
 	{
-		pthread_mutex_unlock(&(philo->mutex->m_forks[philo->fork[LEFT]]));
+		pthread_mutex_unlock(&(philo->mutex->m_forks[philo->fork[RIGHT]]));
 		return (false);
 	}
-	pthread_mutex_lock(&(philo->mutex->m_forks[philo->fork[RIGHT]]));
+	pthread_mutex_lock(&(philo->mutex->m_forks[philo->fork[LEFT]]));
 	print_status(philo, FORK);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 22:42:23 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/24 20:41:48 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/24 21:40:24 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void	parent_execution(t_philo *philo)
 		waitpid(philo->data->pid_arr[i], &status, 0);
 		i++;
 	}
+	free(philo->data->pid_arr);
 	destroy_sems(philo);
 }

@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:35:33 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/24 20:26:05 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/10/24 21:38:44 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_data	init_data(int ac, char **av)
 	data.time_to_sleep = ft_atol(av[4]);
 	data.max_eat = -1;
 	data.state = running;
+	data.pid_arr = NULL;
 	if (ac > 5)
 		data.max_eat = ft_atol(av[5]);
 	check_value_errors(data);

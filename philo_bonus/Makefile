@@ -6,13 +6,13 @@
 #    By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 03:39:31 by fregulie          #+#    #+#              #
-#    Updated: 2021/10/24 20:47:51 by fregulie         ###   ########.fr        #
+#    Updated: 2021/10/24 21:39:41 by fregulie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	philo_bonus
 CC				=	clang
-FLAGS			=	-Wall -Wextra -Werror
+FLAGS			=	-Wall -Wextra -Werror -g3
 
 SRCS			=	main.c \
 					init.c \
