@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 20:09:36 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/24 20:47:23 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:29:59 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*check_death(void *philo_p)
 			return (NULL);
 		}
 		sem_post(philo->s_death);
-		usleep(1000);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -70,8 +70,9 @@ void	child_execution(t_philo *philo)
 	philo->tid = create_death_thread(philo);
 	while (check_pstate(philo, running) && !check_state(philo, dead))
 	{
-		if (eat(philo) != 0)
-			break ;
+		if (philo->index % 2 == 0 || !check_state(philo, undef))
+			if (eat(philo) != 0)
+				break ;
 		if (check_eat_counter(philo) != 0)
 			break ;
 		change_state(philo, sleeping);
