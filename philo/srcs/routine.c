@@ -6,7 +6,7 @@
 /*   By: fregulie <fregulie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 19:21:25 by fregulie          #+#    #+#             */
-/*   Updated: 2021/10/25 14:33:15 by fregulie         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:59:05 by fregulie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ void	check_end(t_philo *philo)
 	{
 		i = 0;
 		all_done_eating = true;
-		while (i < philo->data->nb_philo && philo->data->state == running)
+		while (i < philo->data->nb_philo && check_pstate(philo, running))
 		{
-			if (!check_state(philo, done_eating))
+			if (!check_state(&philo[i], done_eating))
 				all_done_eating = false;
 			pthread_mutex_lock(&philo[i].m_death);
-			if (!check_state(philo, done_eating)
+			if (!check_state(&philo[i], done_eating)
 				&& check_start_val(philo)
 				&& get_time_diff(philo[i].last_eat)
 				> (size_t)philo->data->time_to_die)
