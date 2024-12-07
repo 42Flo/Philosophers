@@ -2,7 +2,7 @@
 
 Implementations of the classic Dining Philosophers Problem in C.
 
-[The Dining Philosophers problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem) is a classic synchronization problem involving philosophers sitting around a table, sharing a limited number of forks. Each philosopher alternates between thinking and eating while following certain rules to avoid deadlocks and starvation.
+[The Dining Philosophers problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem) is a classic synchronization problem involving philosophers sitting around a table, sharing a limited number of forks. Each philosopher alternates between thinking, eating and sleeping while following certain rules to avoid deadlocks and starvation.
 
 1. **philo/** - Multi-threaded implementation using POSIX threads (`pthread`) and mutexes.
 
